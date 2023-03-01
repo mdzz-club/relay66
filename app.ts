@@ -11,7 +11,7 @@ await spam.start();
 export const app = new nostring.Application({
   upgradeWebSocketFn: nostring.upgradeFn,
   db,
-  onEvent,
+  // onEvent,
   onReq,
   onStream,
 });
