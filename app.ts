@@ -14,6 +14,10 @@ export const app = new nostring.Application({
   onEvent,
   onReq,
   onStream,
+  name: Deno.env.get("RELAY_NAME"),
+  contact: Deno.env.get("ADMIN_CONTACT"),
+  pubkey: Deno.env.get("ADMIN_PUBKEY"),
+  description: Deno.env.get("RELAY_DESC"),
 });
 const port = parseInt(Deno.env.get("PORT") || "9000");
 serve(app.getHandler(), { port });
