@@ -17,7 +17,7 @@ class SpamFilter {
       for (const i of all.flat()) {
         this.words.add(i);
       }
-      console.info(new Date(), "update workds", this.words.size);
+      console.info(new Date(), "update words", this.words.size);
     } catch {
       //
     }
@@ -34,6 +34,7 @@ class SpamFilter {
         }
 
         if (count / words.length >= this.percent) {
+          console.log(count, words);
           return false;
         }
       }
@@ -60,8 +61,8 @@ class SpamFilter {
       const res = await fetch(
         "https://raw.githubusercontent.com/xbol0/nostr-spam-words/main/words.txt",
       );
-      const list = (await res.text()).split("\n");
-      return list.map((i) => i.split(" "));
+      const list = (await res.text()).split("\n").filter((i) => !!i);
+      return list.map((i) => i.split(" ")).filter((i) => i.length > 1);
     } catch {
       return [];
     }
