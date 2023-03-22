@@ -225,9 +225,11 @@ function makeQuery(params: nostring.ReqParams[]): [string, unknown[]] {
   };
   const makeSub = (p: nostring.ReqParams) => {
     const wheres: string[] = ["1=1"];
-    if (p.ids && p.ids.length) {
+    const ids = p.ids && Array.isArray(p.ids)
+      ? p.ids.filter((i) => typeof i === "string" && i)
+      : [];
+    if (ids.length) {
       const subWheres: string[] = [];
-      const ids = p.ids.filter((i) => typeof i === "string" && i);
       const fullIds = ids.filter((i) => i && i.length === 64);
       const prefixIds = ids.filter((i) => i && i.length < 64);
       if (fullIds.length) {
@@ -249,9 +251,11 @@ function makeQuery(params: nostring.ReqParams[]): [string, unknown[]] {
       }
     }
 
-    if (p.authors && p.authors.length) {
+    const authors = p.authors && Array.isArray(p.authors)
+      ? p.authors.filter((i) => typeof i === "string" && i)
+      : [];
+    if (authors.length) {
       const subWheres: string[] = [];
-      const authors = p.authors.filter((i) => typeof i === "string" && i);
       const fullIds = authors.filter((i) => i.length === 64);
       const prefixIds = authors.filter((i) => i.length < 64);
       if (fullIds.length) {
